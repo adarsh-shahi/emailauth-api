@@ -23,3 +23,5 @@ const QupdateOTP = (token, otp) => {
   UPDATE otp SET otp = '${otp}' WHERE token = '${token}';
   `;
 };
+
+export { QsaveTokenOTP, QgetOTP, QupdateOTP };
