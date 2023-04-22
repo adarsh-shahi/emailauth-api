@@ -1,0 +1,31 @@
+{
+	"name": "emailauth-api",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "This approach generates a JWT and OTP for user authentication via a REST API. The email address is sent to the server, which generates the JWT and OTP, and sends them back to the developer and OTP to user's email. The developer sends the OTP and JWT to the server for verification and authentication.",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon ./src/index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/adarsh-shahi/emailauth-api.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/adarsh-shahi/emailauth-api/issues"
+	},
+	"homepage": "https://github.com/adarsh-shahi/emailauth-api#readme",
+	"dependencies": {
+		"dotenv": "^16.0.3",
+		"jsonwebtoken": "^9.0.0",
+		"pg": "^8.10.0",
+		"restwave": "^1.0.2"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.22"
+	}
+}
