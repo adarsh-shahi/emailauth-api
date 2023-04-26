@@ -21,6 +21,7 @@ app.use((req, res) => {
 		message: "endpoint not available",
 	});
 });
+
 app.listen(3000, () => {
 	console.log("server listening on 3000");
 });
