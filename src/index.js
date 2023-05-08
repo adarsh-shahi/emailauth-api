@@ -1,13 +1,8 @@
-import { RestWave, Router } from "restwave";
+import RestWave from "restwave";
 import { resendOTP, sendOTP, verifyOTP } from "./controller.js";
 const app = new RestWave();
 
-app.use((req, res, next) => {
-	console.log("Passed throught middleware");
-	next();
-});
-
-const router = new Router();
+const router = RestWave.router();
 
 router.post("/sendotp", sendOTP);
 router.post("/verifyotp", verifyOTP);
@@ -22,6 +17,7 @@ app.use((req, res) => {
 	});
 });
 
+app.printMiddlewares();
 app.listen(3000, () => {
 	console.log("server listening on 3000");
 });
