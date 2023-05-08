@@ -6,7 +6,6 @@ import validator from "validator";
 import { QsaveTokenOTP, QgetOTP, QupdateOTP } from "./queries.js";
 
 const generateToken = (email, minutes = 60) => {
-	console.log(minutes);
 	return jwt.sign({ email }, process.env.JWT_SECRET, {
 		expiresIn: 60 * minutes,
 	});
@@ -20,7 +19,7 @@ const getVerificationCode = () => {
 
 const sendOTP = async (req, res) => {
 	try {
-		const { email, expiresIn } = req.body;
+		const { email, expiresIn } = req.data;
 		if (!email || !validator.isEmail(email))
 			throw new Error("please provide valid email");
 		const otp = getVerificationCode();
@@ -41,16 +40,12 @@ const sendOTP = async (req, res) => {
 
 const verifyOTP = async (req, res) => {
 	try {
-		console.log("in verify");
-		const { token, otp } = req.body;
+		const { token, otp } = req.data;
 		if (!token || !otp) throw new Error("please provide token and otp");
 		const { email } = jwt.verify(token, process.env.JWT_SECRET);
 		if (!email) throw new Error("OTP expired. Send Again");
-		console.log("Email: " + email);
 		const response = await pool.query(QgetOTP(token));
 		const { token: dbToken, otp: dbOTP } = response.rows[0];
-		console.log(dbToken);
-		console.log(token);
 		if (dbToken !== token)
 			throw new Error("error occured please generate OTP again");
 		else if (otp !== dbOTP)
@@ -69,7 +64,7 @@ const verifyOTP = async (req, res) => {
 
 const resendOTP = async (req, res) => {
 	try {
-		const { token } = req.body;
+		const { token } = req.data;
 		if (!token) throw new Error("please provide token");
 		const { email } = jwt.verify(token, process.env.JWT_SECRET);
 		if (!email) throw new Error("OTP expired. Send Again");
@@ -85,7 +80,7 @@ const resendOTP = async (req, res) => {
 			status: "success",
 			message: {
 				email,
-				message: "otp sent"
+				message: "otp sent",
 			},
 		});
 	} catch (e) {
